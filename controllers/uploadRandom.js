@@ -1,7 +1,6 @@
 import dotenv from 'dotenv'
 import axios from 'axios'
 import { uploadToS3 } from '../middleware/uploadToS3.js';
-import connection from '../consumer.js';
 
 dotenv.config()
 

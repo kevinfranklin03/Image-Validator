@@ -1,4 +1,5 @@
 import amqp from 'amqplib';
+
 // Publisher
 
 async function connect(img) {
