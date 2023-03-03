@@ -1,9 +1,11 @@
 import { awsConfig } from "./middleware/awsConfig.js";
+import { DeleteObjectCommand } from "@aws-sdk/client-s3";
 import AWS from 'aws-sdk'
-const S3 = new AWS.S3(awsConfig);
 AWS.config.update(awsConfig);
-// Moderation Part
+import dotenv from 'dotenv'
+dotenv.config()
 
+// Moderation Part
 
 export  const  handleModeration = async (inputValue) => {
   const bucket = 'image-validator' 
@@ -18,13 +20,13 @@ export  const  handleModeration = async (inputValue) => {
       },
     }
   }
+  
   const deleteParams = {
     Bucket: bucket,
-    Key: photo
+    Key: photo,
   }
 
   moderation.detectModerationLabels(params, function(err, response) {
-
     if(response == null) {
       console.log(`No explicit content found in the image ${inputValue}`) 
     }else {
@@ -35,12 +37,9 @@ export  const  handleModeration = async (inputValue) => {
       const ConfidenceValue = response.ModerationLabels[0].Confidence
 
         // Delete From S3 Part
-        if(ConfidenceValue > 90) {
-          S3.deleteObject(deleteParams, function(err, data) {
-            if (err) console.log(err, err.stack); // an error occurred
-            else  
-            console.log('Deleted from the bucket')
-          })         // successful response
+        if(ConfidenceValue > process.env.CONFIDENCE_VALUE) {
+              new DeleteObjectCommand(deleteParams);
+              console.log("image Deleted Successfully from the bucket")
         }else {
           console.log(err)
         }
@@ -48,4 +47,3 @@ export  const  handleModeration = async (inputValue) => {
     } 
   })
 }
-// handleModeration()

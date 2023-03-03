@@ -17,11 +17,9 @@ async function getResponse() {
         random = jsonData.urls.regular;
     }) 
     return random
-
 }
 
 export const uploadRandom = async (req, res) => {
-  
   const urlValue = await getResponse();
   const url = urlValue
   axios({
@@ -40,10 +38,4 @@ export const uploadRandom = async (req, res) => {
         console.log(err)
       })
   })
- 
-  
-  // setTimeout(()=> {
-  //     console.log('            ')
-  //     connection()
-  //   }, 2000)
 }  
