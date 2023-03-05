@@ -26,6 +26,8 @@ To run this project, you will need to add the following environment variables to
 
 `AWS_REGION`
 
+`AWS_BUCKET`
+
 `CLIENT_ID`
 
 `CONFIDENCE_VALUE`
