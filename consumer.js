@@ -13,9 +13,9 @@ async function connection() {
         async function consume() {
             await channel.consume('imageLocation',async img => {
                 const input = JSON.parse(img.content.toString())
-                console.log('message consumed')
-                await handleModeration(input)
+                handleModeration(input)
                 channel.ack(img)
+                console.log('message consumed')
             })   
         }
         setInterval( ()=> {

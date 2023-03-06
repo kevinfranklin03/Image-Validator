@@ -5,10 +5,12 @@ const S3 = new AWS.S3(awsConfig);
 
 // upload to S3 Bucket
 
-const randomNumber = Math.floor(1000 + Math.random() * 9000);
 
 
 export const uploadToS3 = (fileData, name) => {
+
+    const randomNumber = Math.floor(1000 + Math.random() * 9000);
+
     let keyValue = '';
     if(name === undefined) {
         keyValue = `${Date.now().toString()}.jpg`
@@ -21,7 +23,7 @@ export const uploadToS3 = (fileData, name) => {
     
     return new Promise((resolve, reject) =>   {
         const params = {
-            Bucket: 'image-validator',
+            Bucket: process.env.AWS_BUCKET,
             Key: keyValue, // generate random key value
             Body: fileData
         }
